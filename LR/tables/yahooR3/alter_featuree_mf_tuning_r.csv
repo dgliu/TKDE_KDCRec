@@ -1,0 +1,4 @@
+model,rank,alpha,lambda,lambda2,iter,mode,confidence,batch_size,step,source,AUC,NLL
+FeatureE-MF,10,0,0.1,0,100,alter,0,128,1,,"[0.72343, 0.0]","[-0.58983, 0.0]"
+FeatureE-MF,10,0,0.1,0,100,alter,0,128,3,,"[0.72445, 0.0]","[-0.58194, 0.0]"
+FeatureE-MF,10,0,0.1,0,100,alter,0,128,5,,"[0.72512, 0.0]","[-0.57848, 0.0]"

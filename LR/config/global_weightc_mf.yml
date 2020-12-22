@@ -1,0 +1,13 @@
+parameters:
+    models: WeightC-MF
+    rank: [10]
+    iter: 100
+    batch_size: [128]
+    lambda: [0.1]
+    lambda2: [0]
+    confidence: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+    step: [0]
+    alpha: [0]
+    mode: 'global'
+    topK: [5, 10, 15, 20, 50]
+    metric: [NLL, AUC]

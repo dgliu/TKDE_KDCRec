@@ -1,0 +1,2 @@
+model,rank,alpha,lambda,lambda2,iter,mode,confidence,batch_size,step,source,AUC,NLL
+FeatureE-MF,10,0,0.1,0,100,concat,0,128,0,,"[0.72361, 0.0]","[-0.58697, 0.0]"

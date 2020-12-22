@@ -1,0 +1,13 @@
+parameters:
+    models: FeatureE-AE
+    rank: [200]
+    iter: 100
+    batch_size: [128]
+    lambda: [0.00001]
+    lambda2: [0]
+    confidence: [0]
+    step: [1, 3, 5]
+    alpha: [0]
+    mode: 'alter'
+    topK: [5, 10, 15, 20, 50]
+    metric: [NLL, AUC]

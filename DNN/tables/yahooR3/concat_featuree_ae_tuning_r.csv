@@ -1,0 +1,2 @@
+model,rank,alpha,lambda,lambda2,iter,mode,confidence,batch_size,step,source,AUC,NLL
+FeatureE-AE,200,0,1e-05,0,100,concat,0,128,0,,"[0.70024, 0.0]","[-0.58283, 0.0]"

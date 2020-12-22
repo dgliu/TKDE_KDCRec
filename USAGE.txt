@@ -1,0 +1,148 @@
+cd TKDE_KDCRec/LR/
+
+================================================================================================
+1. The entire execution process of the experiment£º
+
+<Tuning the basic model>
+
+CUDA_VISIBLE_DEVICES=0 python3 tune_parameters.py (S_c MF)
+
+CUDA_VISIBLE_DEVICES=1 python3 tune_parameters.py -tb 'unif_mf_tuning_r.csv' -sr 'unif' -y 'config/unif_mf.yml' (S_t MF)
+
+CUDA_VISIBLE_DEVICES=2 python3 tune_parameters.py -tb 'combine_mf_tuning_r.csv' -sr 'combine' (Combine MF)
+
+CUDA_VISIBLE_DEVICES=3 python3 tune_parameters.py -tb 'ips_mf_tuning_r.csv' -y 'config/ips_mf.yml' (IPS-MF)
+
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+<Obtain pre-trained models of Mc and Mt>
+
+CUDA_VISIBLE_DEVICES=0 python3 get_pretrain.py (S_c MF)
+
+CUDA_VISIBLE_DEVICES=1 python3 get_pretrain.py -tb 'unif_mf_tuning_r.csv' -sr 'unif' (S_t MF)
+
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+<Tuning other models>
+
+CUDA_VISIBLE_DEVICES=0 python3 tune_parameters.py -tb 'bridge_var1_mf_tuning_r.csv' -y 'config/bridge_var1_mf.yml' (Bridge-Var1-MF) *
+
+CUDA_VISIBLE_DEVICES=1 python3 tune_parameters.py -tb 'bridge_var2_mf_tuning_r.csv' -y 'config/bridge_var2_mf.yml' (Bridge-Var2-MF) *
+
+CUDA_VISIBLE_DEVICES=2 python3 tune_parameters.py -tb 'refine_mf_tuning_r.csv' -y 'config/refine_mf.yml' (Refine-MF) *
+
+CUDA_VISIBLE_DEVICES=3 python3 tune_parameters.py -tb 'cause_mf_tuning_r.csv' -y 'config/cause_mf.yml' (CausE-MF)
+
+CUDA_VISIBLE_DEVICES=4 python3 tune_parameters.py -tb 'global_weightc_mf_tuning_r.csv' -y 'config/global_weightc_mf.yml' (WeightC-MF global)
+
+CUDA_VISIBLE_DEVICES=5 python3 tune_parameters.py -tb 'local_weightc_mf_tuning_r.csv' -y 'config/local_weightc_mf.yml' (WeightC-MF local) *
+
+CUDA_VISIBLE_DEVICES=6 python3 tune_parameters.py -tb 'delay_mf_tuning_r.csv' -y 'config/delay_mf.yml' (Delay-MF)
+
+CUDA_VISIBLE_DEVICES=7 python3 tune_parameters.py -tb 'alter_featuree_mf_tuning_r.csv' -y 'config/alter_featuree_mf.yml' (FeatureE-MF alter)
+
+CUDA_VISIBLE_DEVICES=0 python3 tune_parameters.py -tb 'concat_featuree_mf_tuning_r.csv' -y 'config/concat_featuree_mf.yml' (FeatureE-MF concat)
+
+CUDA_VISIBLE_DEVICES=1 python3 tune_parameters.py -tb 'old_bridge_mf_tuning_r.csv' -y 'config/old_bridge_mf.yml' (Old-Bridge-MF)
+
+CUDA_VISIBLE_DEVICES=2 python3 tune_parameters.py -tb 'old_refine_mf_tuning_r.csv' -y 'config/old_refine_mf.yml' (Old-Refine-MF)
+
+CUDA_VISIBLE_DEVICES=3 python3 tune_parameters.py -tb 'old_weightc_mf_tuning_r.csv' -y 'config/old_weightc_mf.yml' (Old-WeightC-MF local)
+
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+<Train the model according to the best parameters, save the parameters, and output the results>
+
+CUDA_VISIBLE_DEVICES=0 python3 reproduce_paper_results.py
+
+================================================================================================
+2. PN£º
+
+CUDA_VISIBLE_DEVICES=1 python3 PN_analysis.py
+
+================================================================================================
+3. Scale£º
+
+CUDA_VISIBLE_DEVICES=2 python3 scale_analysis.py
+
+================================================================================================
+4. Analisys
+
+CUDA_VISIBLE_DEVICES=1 python3 refine_analysis.py (Refine-MF)
+CUDA_VISIBLE_DEVICES=2 python3 refine_analysis.py -ty 'mode' (Refine-MF)
+
+CUDA_VISIBLE_DEVICES=1 python3 tune_parameters.py -tb 'exp_bridge_var2_mf_tuning_r.csv' -y 'config/bridge_var2_mf.yml' (Bridge-Var2-MF)
+CUDA_VISIBLE_DEVICES=1 python3 tune_parameters.py -tb 'norm_bridge_var2_mf_tuning_r.csv' -y 'config/bridge_var2_mf.yml' (Bridge-Var2-MF)
+CUDA_VISIBLE_DEVICES=2 python3 tune_parameters.py -tb 'exp_local_weightc_mf_tuning_r.csv' -y 'config/local_weightc_mf.yml' (WeightC-MF local)
+CUDA_VISIBLE_DEVICES=2 python3 tune_parameters.py -tb 'norm_local_weightc_mf_tuning_r.csv' -y 'config/local_weightc_mf.yml' (WeightC-MF local)
+
+**************************************************************************************************************************************************
+
+
+cd TKDE_KDCRec/DNN/
+
+================================================================================================
+1. The entire execution process of the experiment£º
+
+<Tuning the basic model>
+
+CUDA_VISIBLE_DEVICES=0 python3 tune_parameters.py (S_c AE)
+
+CUDA_VISIBLE_DEVICES=1 python3 tune_parameters.py -tb 'unif_ae_tuning_r.csv' -sr 'unif' -y 'config/unif_ae.yml' (S_t AE)
+
+CUDA_VISIBLE_DEVICES=2 python3 tune_parameters.py -tb 'combine_ae_tuning_r.csv' -sr 'combine' (Combine AE)
+
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+<Obtain pre-trained models of Mc and Mt>
+
+CUDA_VISIBLE_DEVICES=0 python3 get_pretrain.py (S_c AE)
+
+CUDA_VISIBLE_DEVICES=1 python3 get_pretrain.py -tb 'unif_ae_tuning_r.csv' -sr 'unif' (S_t AE)
+
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+<Tuning other models>
+
+CUDA_VISIBLE_DEVICES=0 python3 tune_parameters.py -tb 'bridge_var1_ae_tuning_r.csv' -y 'config/bridge_var1_ae.yml' (Bridge-Var1-AE) *
+
+CUDA_VISIBLE_DEVICES=1 python3 tune_parameters.py -tb 'bridge_var2_ae_tuning_r.csv' -y 'config/bridge_var2_ae.yml' (Bridge-Var2-AE) *
+
+CUDA_VISIBLE_DEVICES=2 python3 tune_parameters.py -tb 'refine_ae_tuning_r.csv' -y 'config/refine_ae.yml' (Refine-AE) *
+
+CUDA_VISIBLE_DEVICES=3 python3 tune_parameters.py -tb 'global_weightc_ae_tuning_r.csv' -y 'config/global_weightc_ae.yml' (WeightC-AE global)
+
+CUDA_VISIBLE_DEVICES=4 python3 tune_parameters.py -tb 'local_weightc_ae_tuning_r.csv' -y 'config/local_weightc_ae.yml' (WeightC-AE local) *
+
+CUDA_VISIBLE_DEVICES=5 python3 tune_parameters.py -tb 'delay_ae_tuning_r.csv' -y 'config/delay_ae.yml' (Delay-AE)
+
+CUDA_VISIBLE_DEVICES=6 python3 tune_parameters.py -tb 'alter_featuree_ae_tuning_r.csv' -y 'config/alter_featuree_ae.yml' (FeatureE-AE alter)
+
+CUDA_VISIBLE_DEVICES=7 python3 tune_parameters.py -tb 'concat_featuree_ae_tuning_r.csv' -y 'config/concat_featuree_ae.yml' (FeatureE-AE concat)
+
+CUDA_VISIBLE_DEVICES=0 python3 tune_parameters.py -tb 'old_bridge_ae_tuning_r.csv' -y 'config/old_bridge_ae.yml' (Old-Bridge-AE)
+
+CUDA_VISIBLE_DEVICES=1 python3 tune_parameters.py -tb 'old_refine_ae_tuning_r.csv' -y 'config/old_refine_ae.yml' (Old-Refine-AE)
+
+CUDA_VISIBLE_DEVICES=2 python3 tune_parameters.py -tb 'old_weightc_ae_tuning_r.csv' -y 'config/old_weightc_ae.yml' (Old-WeightC-AE local)
+
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+<Train the model according to the best parameters, save the parameters, and output the results>
+
+CUDA_VISIBLE_DEVICES=0 python3 reproduce_paper_results.py
+
+================================================================================================
+2. PN£º
+
+CUDA_VISIBLE_DEVICES=1 python3 PN_analysis.py
+
+================================================================================================
+3. Scale£º
+
+CUDA_VISIBLE_DEVICES=2 python3 scale_analysis.py
+
+================================================================================================
+4. Analisys
+
+CUDA_VISIBLE_DEVICES=3 python3 refine_analysis.py (Refine-AE)
+CUDA_VISIBLE_DEVICES=4 python3 refine_analysis.py -ty 'mode' (Refine-AE)
+
+CUDA_VISIBLE_DEVICES=3 python3 tune_parameters.py -tb 'exp_bridge_var2_ae_tuning_r.csv' -y 'config/bridge_var2_ae.yml' (Bridge-Var2-AE)
+CUDA_VISIBLE_DEVICES=3 python3 tune_parameters.py -tb 'norm_bridge_var2_ae_tuning_r.csv' -y 'config/bridge_var2_ae.yml' (Bridge-Var2-AE)
+CUDA_VISIBLE_DEVICES=4 python3 tune_parameters.py -tb 'sig_local_weightc_ae_tuning_r.csv' -y 'config/local_weightc_ae.yml' (WeightC-AE local)
+CUDA_VISIBLE_DEVICES=4 python3 tune_parameters.py -tb 'norm_local_weightc_ae_tuning_r.csv' -y 'config/local_weightc_ae.yml' (WeightC-AE local)

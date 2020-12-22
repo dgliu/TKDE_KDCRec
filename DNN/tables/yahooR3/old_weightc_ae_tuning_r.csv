@@ -1,0 +1,2 @@
+model,rank,alpha,lambda,lambda2,iter,mode,confidence,batch_size,step,source,AUC,NLL
+Old-WeightC-AE,200,0,1e-05,0,100,none,0,128,0,,"[0.70441, 0.0]","[-0.58489, 0.0]"
